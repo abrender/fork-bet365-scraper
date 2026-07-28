@@ -11,5 +11,10 @@ injectJs(chrome.runtime.getURL("js/hook.js"));
 
 
 window.addEventListener("sendToAPI", async Ot => {
-    chrome.runtime.sendMessage({ type: "SEND_HTTP", data: Ot.detail});
+    const payload = Ot.detail || {};
+    chrome.runtime.sendMessage({
+        type: "SEND_HTTP",
+        data: payload.data,
+        lang: payload.lang
+    });
 })

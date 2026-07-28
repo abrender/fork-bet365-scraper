@@ -3,7 +3,15 @@
 function wrap(obj, meth) {
    var orig = obj[meth];
    obj[meth] = function wrapper() {
-       window.dispatchEvent(new CustomEvent('sendToAPI', { detail: arguments[0] }));
+       var lang = null;
+       try {
+           if (window.GamingContext && window.GamingContext.languageId != null) {
+               lang = window.GamingContext.languageId;
+           }
+       } catch (e) {}
+       window.dispatchEvent(new CustomEvent('sendToAPI', {
+           detail: { data: arguments[0], lang: lang }
+       }));
        return orig.apply(this, arguments);
    }
 }

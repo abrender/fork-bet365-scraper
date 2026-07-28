@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({data: message.data})
+            body: JSON.stringify({ data: message.data, lang: message.lang })
         })
         .then(response => response.text())
         .then(responseData => {
